@@ -140,10 +140,10 @@ RSpec.describe 'String management', type: :request do
       end
 
       it 'returns only those strings that match' do
-        get '/strings', params: { filter: { match: 'ape' } }
+        get '/strings', params: { filter: { match: 'app' } }
 
         strs = JSON[response.body]
-        expect(strs.size).to eq 4
+        expect(strs.size).to eq 3
       end
     end
   end

@@ -12,7 +12,7 @@ class Db
       def match
         FuzzyMatch
           .new(strings, read: :key)
-          .find_all_with_score(needle)
+          .find_all_with_score(needle, threshold: 0.2)
           .map { |value, *_scores| value }
       end
     end
