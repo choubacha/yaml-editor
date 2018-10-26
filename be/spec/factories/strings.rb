@@ -8,7 +8,7 @@ FactoryBot.define do
 
     key { Faker::Internet.slug(nil, '.') }
     value { Faker::Lorem.paragraph }
-    entity_slug { Faker::App.name.downcase }
+    entity_slug { Faker::Internet.slug(nil, '_') }
 
     initialize_with { new(attributes) }
   end

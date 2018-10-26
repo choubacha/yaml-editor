@@ -3,7 +3,13 @@
 # The strings controller provides basic CRUD functionality for the strings.
 class StringsController < ApplicationController
   def index
-    render json: db.strings.all
+    entity_slug = params.dig(:filter, :entity_slug)
+    strings = if entity_slug.present?
+                db.strings.for_entity(entity_slug)
+              else
+                db.strings.all
+              end
+    render json: strings
   end
 
   def create

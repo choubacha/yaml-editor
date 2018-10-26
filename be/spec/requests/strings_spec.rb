@@ -101,6 +101,22 @@ RSpec.describe 'String management', type: :request do
 
       expect(JSON[response.body]).to eq([str.to_h.stringify_keys])
     end
+
+    context 'filtering by entity' do
+      before do
+        build_list(:str, 4, entity_slug: 'myslug').each do |str|
+          db.strings.add(str)
+        end
+      end
+
+      it 'returns only those strings in that entity' do
+        get '/strings', params: { filter: { entity_slug: 'myslug' } }
+
+        strs = JSON[response.body]
+        expect(strs.size).to eq 4
+        expect(strs.map { |str| str['entity_slug'] }).to eq(%w[myslug myslug myslug myslug])
+      end
+    end
   end
 
   context 'deletion' do
