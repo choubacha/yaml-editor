@@ -7,7 +7,9 @@ FactoryBot.define do
     before(:create) { raise 'No persistance, just use build' }
 
     key { Faker::Internet.slug(nil, '.') }
-    value { [Faker::Lorem.paragraph] }
+    value do
+      Array.new(rand(1..4)).map { Faker::Lorem.paragraph }
+    end
     entity_slug { Faker::Internet.slug(nil, '_') }
 
     initialize_with { new(attributes) }

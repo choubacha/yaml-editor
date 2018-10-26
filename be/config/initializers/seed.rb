@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Set your environment variable for seeding and it will load in junk data that is random
 if ENV['SEED'] && Rails.env.development?
   require 'factory_bot'
