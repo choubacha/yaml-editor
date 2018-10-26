@@ -1,8 +1,10 @@
 import api from "../lib/api";
 
-export const addString = (key, value) => {
+const MINIMUM_SEARCH_LENGTH = 3;
+
+export const addString = (entitySlug, key, value) => {
   return dispatch => {
-    return api.strings.post({ key, value, entity_slug: "testing" }).then(response => {
+    return api.strings.post({ key, value }).then(response => {
       dispatch({
         type: "ADD_STRING",
         payload: response.data
@@ -11,9 +13,9 @@ export const addString = (key, value) => {
   };
 };
 
-export const updateString = (key, value) => {
+export const updateString = (entitySlug, key, value) => {
   return dispatch => {
-    return api.strings.put(key, { value, entity_slug: "testing" }).then(response => {
+    return api.strings.put(key, { value }).then(response => {
       const {
         data: { key, value }
       } = response;
@@ -28,13 +30,24 @@ export const updateString = (key, value) => {
 
 export const fetchStrings = params => {
   return dispatch => {
-    return api.strings.get(params).then(response => {
-      let { data: strings } = response;
+    const {
+      filter: { match: matchStr }
+    } = params;
 
+    if (matchStr.length >= MINIMUM_SEARCH_LENGTH) {
+      return api.strings.get(params).then(response => {
+        let { data: strings } = response;
+
+        dispatch({
+          type: "FETCH_STRINGS",
+          payload: strings
+        });
+      });
+    } else {
       dispatch({
         type: "FETCH_STRINGS",
-        payload: strings
+        payload: []
       });
-    });
+    }
   };
 };

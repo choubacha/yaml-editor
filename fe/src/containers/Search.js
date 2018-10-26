@@ -6,14 +6,10 @@ import * as stringActions from "../actions";
 import Search from "../components/Search";
 
 class SearchContainer extends React.Component {
-  componentDidMount() {
-    this.props.stringActions.fetchStrings();
-  }
-
   render() {
     const { results, stringActions } = this.props;
 
-    return <Search results={results} onUpdateString={stringActions.updateString} onSearch={stringActions.fetchStrings} />;
+    return <Search results={results} entitySlug={"identity"} onUpdateString={stringActions.updateString} onSearch={stringActions.fetchStrings} />;
   }
 }
 
@@ -22,7 +18,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => {
-  console.log(state);
   const { strings } = state;
 
   return {

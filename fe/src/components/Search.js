@@ -1,5 +1,5 @@
 import React from "react";
-import { Pane, Table, SearchInput, Autocomplete, TextInput, Button } from "evergreen-ui";
+import { Pane, Table, TextInput } from "evergreen-ui";
 
 import Result from "./Result";
 
@@ -7,11 +7,10 @@ import "../App.css";
 
 export default class Search extends React.PureComponent {
   render() {
-    const { results, onUpdateString, onSearch } = this.props;
-    const foundKeys = Object.keys(results);
+    const { entitySlug, results, onUpdateString, onSearch } = this.props;
 
     const resultElements = Object.values(results).map(({ key: resultKey, value: resultValue }) => {
-      return <Result key={resultKey} resultKey={resultKey} resultValue={resultValue} onUpdateString={onUpdateString} />;
+      return <Result key={resultKey} entitySlug={entitySlug} resultKey={resultKey} resultValue={resultValue} onUpdateString={onUpdateString} />;
     });
 
     return (

@@ -2,7 +2,6 @@ export default (state = [], action) => {
   switch (action.type) {
     case "FETCH_STRINGS": {
       const strings = action.payload;
-      console.log("repsonse", action.payload);
 
       return [...strings];
     }

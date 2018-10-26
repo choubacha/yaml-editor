@@ -51,7 +51,6 @@ export default {
       return axios.post(`${host}/strings`, params);
     },
     put: (key, params = {}) => {
-      console.log("udate", params);
       const url = `${host}/strings/${key}`;
 
       return axios.put(url, params);

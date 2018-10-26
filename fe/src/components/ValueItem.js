@@ -1,15 +1,15 @@
 import React from "react";
-import { Card, Table, Pane, TextInput, Button } from "evergreen-ui";
+import { Table, TextInput, Button } from "evergreen-ui";
 
-export default class Result extends React.PureComponent {
+export default class ValueItem extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    const { resultValue } = this.props;
+    const { resultValues } = this.props;
 
     this.state = {
-      original: resultValue,
-      value: resultValue
+      original: resultValues,
+      value: resultValues
     };
   }
   render() {
