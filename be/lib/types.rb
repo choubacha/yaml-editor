@@ -13,10 +13,13 @@ module Types
   # A key represents a unique path to a string
   Key = Strict::String.constrained(format: /\A(?!\.)(\.?([\w\-]+))+\z/)
 
+  # A string value is single piece of data associated with a key
+  Value = Types::Coercible::String.constrained(min_size: 1)
+
   # Represents a translatable string with it's associated key.
   class Str < Dry::Struct
     attribute :key, Key
-    attribute :value, Types::Coercible::String.constrained(min_size: 1)
+    attribute :value, ::Types::Strict::Array.of(Value).constrained(min_size: 2) | Value
     attribute :entity_slug, Slug
   end
 

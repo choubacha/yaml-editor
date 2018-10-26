@@ -57,4 +57,19 @@ RSpec.describe Db::Ops::StringsToYaml do
     hash = Db::Ops::StringsToYaml.new(strings, locale: 'en-GB').build
     expect(hash.keys).to eq(['en-GB'])
   end
+
+  context 'with a string with multiple values' do
+    let(:strings) do
+      [
+        build(:str, key: 'single_value', value: '5'),
+        build(:str, key: 'multi_value', value: %w[1 2 3 4])
+      ]
+    end
+
+    it 'places an array of strings in the output' do
+      hash = Db::Ops::StringsToYaml.new(strings).build['en']
+      expect(hash['single_value']).to eq '5'
+      expect(hash['multi_value']).to eq %w[1 2 3 4]
+    end
+  end
 end
