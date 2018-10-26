@@ -25,10 +25,22 @@
 const axios = require("axios");
 
 export default {
-  strings: {
+  entities: {
     get: (key, params) => {
       axios
-        .get("/strings", params)
+        .get("/entities", params)
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+  },
+  strings: {
+    get: (key, _params = { key }) => {
+      axios
+        .get(`/strings/{key}`)
         .then(function(response) {
           console.log(response);
         })
