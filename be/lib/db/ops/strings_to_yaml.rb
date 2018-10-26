@@ -6,15 +6,20 @@ class Db
     class StringsToYaml
       extend Dry::Initializer
 
-      param(:strings, proc { |v| Types::Array.of(Types::Str).call(v) })
+      param(:strings, ->(v) { Types::Array.of(Types::Str).call(v) })
+      option :locale, Types::String, default: -> { 'en' }
 
       def build
+        { locale => build_strings }
+      end
+
+      private
+
+      def build_strings
         strings
           .sort_by(&:key)
           .each_with_object({}) { |str, obj| nest_under(obj, str) }
       end
-
-      private
 
       def nest_under(hash, str, keys = nil)
         keys ||= str.key.split('.')

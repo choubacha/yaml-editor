@@ -14,31 +14,33 @@ RSpec.describe Db::Ops::StringsToYaml do
     ]
   end
 
-  it 'alphabetizes and puts the values with the leaf key.' do
+  it 'puts the values with the leaf key.' do
     expect(Db::Ops::StringsToYaml.new(strings).build)
       .to eq(
-        'a' => {
+        'en' => {
           'a' => {
-            'b' => {
-              'a' => '1'
-            }
-          }
-        },
-        'b' => {
-          'c' => '2'
-        },
-        'c' => {
-          'b' => '3'
-        },
-        'd' => {
-          'c' => {
             'a' => {
-              'a' => '4'
+              'b' => {
+                'a' => '1'
+              }
             }
+          },
+          'b' => {
+            'c' => '2'
+          },
+          'c' => {
+            'b' => '3'
           },
           'd' => {
             'c' => {
-              'b' => '5'
+              'a' => {
+                'a' => '4'
+              }
+            },
+            'd' => {
+              'c' => {
+                'b' => '5'
+              }
             }
           }
         }
@@ -46,8 +48,13 @@ RSpec.describe Db::Ops::StringsToYaml do
   end
 
   it 'maintains the correct order' do
-    hash = Db::Ops::StringsToYaml.new(strings).build
+    hash = Db::Ops::StringsToYaml.new(strings).build['en']
     expect(hash.keys).to eq(%w[a b c d])
     expect(hash['d'].keys).to eq(%w[c d])
+  end
+
+  it 'can take a locale and nests everything under it' do
+    hash = Db::Ops::StringsToYaml.new(strings, locale: 'en-GB').build
+    expect(hash.keys).to eq(['en-GB'])
   end
 end
