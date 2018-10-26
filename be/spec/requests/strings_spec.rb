@@ -20,6 +20,13 @@ RSpec.describe 'String management', type: :request do
       expect(db.strings.find('my.key').value).to eq 'some string!'
     end
 
+    it 'can create a string with multiple values' do
+      post '/strings', params: { key: 'my.key', value: ['some string!', 'another string!'], entity_slug: 'backend' }
+
+      expect(response).to be_successful
+      expect(db.strings.find('my.key').value).to eq ['some string!', 'another string!']
+    end
+
     context 'with invalid inputs' do
       it 'handles double creation' do
         post '/strings', params: { key: 'my.key', value: 'some string!', entity_slug: 'backend' }

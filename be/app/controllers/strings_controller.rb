@@ -13,7 +13,7 @@ class StringsController < ApplicationController
   end
 
   def create
-    attrs = params.permit(%i[key value entity_slug])
+    attrs = create_attrs
     str = db.strings.find(attrs[:key])
     if str
       render json: { message: 'Key already exists for string' }, status: 422
@@ -54,5 +54,15 @@ class StringsController < ApplicationController
     else
       render json: { message: 'String not found' }, status: 404
     end
+  end
+
+  private
+
+  def create_attrs
+    {
+      key: params[:key],
+      value: params[:value],
+      entity_slug: params[:entity_slug]
+    }
   end
 end
