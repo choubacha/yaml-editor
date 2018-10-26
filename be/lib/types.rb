@@ -16,7 +16,7 @@ module Types
   # Represents a translatable string with it's associated key.
   class Str < Dry::Struct
     attribute :key, Key
-    attribute :value, Types::Coercible::String
+    attribute :value, Types::Coercible::String.constrained(min_size: 1)
     attribute :entity_slug, Slug
   end
 
@@ -25,7 +25,6 @@ module Types
   # An entity can be a gem, engine, or root.
   class Entity < Dry::Struct
     attribute :slug, Slug
-    attribute :name, String
     attribute :path, String
     attribute :type, EntityType
   end
