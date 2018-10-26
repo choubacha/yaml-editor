@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'String management', type: :request do
+RSpec.describe 'String management', type: :request do # rubocop:disable Metrics/BlockLength
   # TODO: Change to work with a scanned directory?
   let(:db) { Db.new([]) }
 
@@ -21,6 +21,17 @@ RSpec.describe 'String management', type: :request do
     end
 
     context 'with invalid inputs' do
+      it 'handles double creation' do
+        post '/strings', params: { key: 'my.key', value: 'some string!', entity_slug: 'backend' }
+
+        expect(response).to be_successful
+        expect(db.strings.find('my.key').value).to eq 'some string!'
+
+        post '/strings', params: { key: 'my.key', value: 'some string!', entity_slug: 'backend' }
+        expect(response.status).to eq 422
+        expect(JSON[response.body]).to eq('message' => 'Key already exists for string')
+      end
+
       it 'handles missing keys' do
         post '/strings', params: { key: 'my.key', value: 'some string!' }
 

@@ -8,12 +8,16 @@ class StringsController < ApplicationController
 
   def create
     attrs = params.permit(%i[key value entity_slug])
+    str = db.strings.find(attrs[:key])
+    if str
+      render json: { message: 'Key already exists for string' }, status: 422
+    else
+      str = Types::Str[attrs.to_h.symbolize_keys]
 
-    str = Types::Str[attrs.to_h.symbolize_keys]
+      db.strings.add(str)
 
-    db.strings.add(str)
-
-    render json: str
+      render json: str
+    end
   end
 
   def show
