@@ -1,0 +1,8 @@
+# http://rubocop.readthedocs.io/en/latest/cops_rails/#railssafenavigation
+Rails/SafeNavigation:
+  Enabled: true
+  ConvertTry: true
+
+# http://rubocop.readthedocs.io/en/latest/cops_metrics/#metricslinelength
+Metrics/LineLength:
+  Max: 120

@@ -20,6 +20,7 @@ require 'action_controller/railtie'
 Bundler.require(*Rails.groups)
 
 module Yamler
+  # The application for yaml.
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
