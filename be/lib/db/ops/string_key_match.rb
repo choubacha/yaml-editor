@@ -10,10 +10,32 @@ class Db
       param :needle, Types::String
 
       def match
-        FuzzyMatch
-          .new(strings, read: :key)
-          .find_all_with_score(needle, threshold: 0.15)
-          .map { |value, *_scores| value }
+        strings
+          .map { |str| [str, measure(str.key)] }
+          .reject { |(_str, score)| score.nil? }
+          .sort_by { |(_str, score)| -score }
+          .map { |(str, _score)| str }
+      end
+
+      private
+
+      def measure(string)
+        index = 0
+        score = 0
+        needle.each_char do |needle_char|
+          while index < string.size
+            curr_char = string[index]
+            if curr_char == needle_char
+              score += 1
+              break
+            elsif score >= 1
+              score += 1
+            end
+            index += 1
+          end
+          return nil if index >= string.size
+        end
+        score.to_f / index.to_f
       end
     end
   end

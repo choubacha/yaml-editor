@@ -136,14 +136,15 @@ RSpec.describe 'String management', type: :request do
       end
 
       before do
+        db.strings.delete(str.key)
         strings.each { |str| db.strings.add(str) }
       end
 
       it 'returns only those strings that match' do
-        get '/strings', params: { filter: { match: 'app' } }
+        get '/strings', params: { filter: { match: 'apple' } }
 
         strs = JSON[response.body]
-        expect(strs.size).to eq 2
+        expect(strs.size).to eq 3
       end
     end
   end
