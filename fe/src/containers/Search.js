@@ -1,27 +1,28 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as keyActions from "../actions";
+import * as stringActions from "../actions";
 
 import Search from "../components/Search";
 
-class AppContainer extends React.Component {
+class SearchContainer extends React.Component {
   componentDidMount() {
-    this.props.keyActions.fetchStrings();
+    this.props.stringActions.fetchStrings();
   }
 
   render() {
-    const results = this.props.results;
+    const { results, stringActions } = this.props;
 
-    return <Search results={results} />;
+    return <Search results={results} onUpdateString={stringActions.updateString} />;
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  keyActions: bindActionCreators(keyActions, dispatch)
+  stringActions: bindActionCreators(stringActions, dispatch)
 });
 
 const mapStateToProps = state => {
+  console.log(state);
   const { strings } = state;
 
   return {
@@ -32,4 +33,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AppContainer);
+)(SearchContainer);

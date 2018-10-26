@@ -24,37 +24,35 @@
 
 const axios = require("axios");
 
+const host = "http://localhost:3000";
+
 export default {
   entities: {
     get: (key, params) => {
-      axios
-        .get("/entities", params)
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      return axios.get("/entities", params);
     }
   },
   strings: {
-    get: (key, _params = { key }) => {
-      axios
-        .get(`/strings/{key}`)
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+    get: (key, params = {}) => {
+      let url = `${host}/strings`;
+
+      if (key) {
+        url = `${url}/${key}`;
+      }
+
+      return axios.get(url);
     },
-    post: (key, params) => {},
-    put: (key, params) => {},
-    delete: key => {}
+    post: (params = {}) => {
+      return axios.post(`${host}/strings`, params);
+    },
+    put: (key, params = {}) => {
+      console.log("udate", params);
+      const url = `${host}/strings/${key}`;
+
+      return axios.put(url, params);
+    },
+    delete: key => {
+      return axios.delete(`/strings/${key}`);
+    }
   }
 };
-
-// api.strings.get(key, params?)
-// api.strings.put(key, params)
-// api.strings.post(key, params)
-// api.strings.delete(key)
