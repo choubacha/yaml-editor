@@ -2,7 +2,7 @@ import api from "../lib/api";
 
 const MINIMUM_SEARCH_LENGTH = 3;
 
-export const addString = (entitySlug, key, value) => {
+export const addString = (key, value) => {
   return dispatch => {
     return api.strings.post({ key, value }).then(response => {
       dispatch({
@@ -13,7 +13,7 @@ export const addString = (entitySlug, key, value) => {
   };
 };
 
-export const updateString = (entitySlug, key, value) => {
+export const updateString = (key, value) => {
   return dispatch => {
     return api.strings.put(key, { value }).then(response => {
       const {

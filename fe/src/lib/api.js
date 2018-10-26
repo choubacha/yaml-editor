@@ -27,6 +27,8 @@ const qs = require("qs");
 
 const host = "http://localhost:3000";
 
+axios.defaults.headers.post["Content-Type"] = "application/json";
+
 export default {
   entities: {
     get: (key, params) => {

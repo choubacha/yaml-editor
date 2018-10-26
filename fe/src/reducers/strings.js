@@ -6,10 +6,6 @@ export default (state = [], action) => {
       return [...strings];
     }
 
-    // case "ADD_STRING": {
-    //   const { key } = action.payload;
-    //   return { ...state, [key]: action.payload };
-    // }
     default:
       return state;
   }
