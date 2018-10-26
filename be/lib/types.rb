@@ -19,7 +19,7 @@ module Types
   # Represents a translatable string with it's associated key.
   class Str < Dry::Struct
     attribute :key, Key
-    attribute :value, ::Types::Strict::Array.of(Value).constrained(min_size: 2) | Value
+    attribute :value, ::Types::Strict::Array.of(Value).constrained(min_size: 1)
     attribute :entity_slug, Slug
   end
 

@@ -18,20 +18,28 @@ class Db
       def build_strings
         strings
           .sort_by(&:key)
-          .each_with_object({}) { |str, obj| nest_under(obj, str) }
+          .each_with_object({}) { |str, obj| nest_under(obj, str, str.key.split('.')) }
       end
 
-      def nest_under(hash, str, keys = nil)
-        keys ||= str.key.split('.')
+      def nest_under(hash, str, keys)
         key = keys.first
         case keys.size
         when 0 then nil # Do nothing
-        when 1 then hash[key] = str.value
+        when 1
+          hash[key] = str_value(str)
         else
           hash[key] ||= {}
           nest_under(hash[key], str, keys[1..-1])
         end
         hash
+      end
+
+      def str_value(str)
+        if str.value.size == 1
+          str.value.first
+        else
+          str.value
+        end
       end
     end
   end

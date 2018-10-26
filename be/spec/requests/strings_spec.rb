@@ -14,10 +14,10 @@ RSpec.describe 'String management', type: :request do
 
   context 'creation' do
     it 'can create a string' do
-      post '/strings', params: { key: 'my.key', value: 'some string!', entity_slug: 'backend' }
+      post '/strings', params: { key: 'my.key', value: ['some string!'], entity_slug: 'backend' }
 
       expect(response).to be_successful
-      expect(db.strings.find('my.key').value).to eq 'some string!'
+      expect(db.strings.find('my.key').value).to eq ['some string!']
     end
 
     it 'can create a string with multiple values' do
@@ -29,18 +29,18 @@ RSpec.describe 'String management', type: :request do
 
     context 'with invalid inputs' do
       it 'handles double creation' do
-        post '/strings', params: { key: 'my.key', value: 'some string!', entity_slug: 'backend' }
+        post '/strings', params: { key: 'my.key', value: ['some string!'], entity_slug: 'backend' }
 
         expect(response).to be_successful
-        expect(db.strings.find('my.key').value).to eq 'some string!'
+        expect(db.strings.find('my.key').value).to eq ['some string!']
 
-        post '/strings', params: { key: 'my.key', value: 'some string!', entity_slug: 'backend' }
+        post '/strings', params: { key: 'my.key', value: ['some string!'], entity_slug: 'backend' }
         expect(response.status).to eq 422
         expect(JSON[response.body]).to eq('message' => 'Key already exists for string')
       end
 
       it 'handles missing keys' do
-        post '/strings', params: { key: 'my.key', value: 'some string!' }
+        post '/strings', params: { key: 'my.key', value: ['some string!'] }
 
         expect(response.status).to eq 422
 
@@ -48,7 +48,7 @@ RSpec.describe 'String management', type: :request do
       end
 
       it 'handles invalid data' do
-        post '/strings', params: { key: 'my key', value: 'some string!', entity_slug: 'backend' }
+        post '/strings', params: { key: 'my key', value: ['some string!'], entity_slug: 'backend' }
 
         expect(response.status).to eq 422
 
@@ -59,7 +59,7 @@ RSpec.describe 'String management', type: :request do
 
   context 'updating' do
     let(:str) do
-      Types::Str[key: 'my.key', value: 'old', entity_slug: 'backend']
+      Types::Str[key: 'my.key', value: ['old'], entity_slug: 'backend']
     end
 
     before do
@@ -67,16 +67,16 @@ RSpec.describe 'String management', type: :request do
     end
 
     it 'can create a string' do
-      put '/strings/my.key', params: { value: 'new' }
+      put '/strings/my.key', params: { value: ['new'] }
 
       expect(response).to be_successful
 
-      expect(db.strings.find('my.key').value).to eq 'new'
+      expect(db.strings.find('my.key').value).to eq ['new']
     end
 
     context 'with invalid inputs' do
       it 'handles record not found' do
-        put '/strings/my.other.key', params: { value: 'new' }
+        put '/strings/my.other.key', params: { value: ['new'] }
 
         expect(response.status).to eq 404
         expect(JSON[response.body]).to eq('message' => 'String not found')
@@ -87,14 +87,14 @@ RSpec.describe 'String management', type: :request do
 
         expect(response.status).to eq 422
 
-        expect(db.strings.find('my.key').value).to eq 'old'
+        expect(db.strings.find('my.key').value).to eq ['old']
       end
     end
   end
 
   context 'index' do
     let(:str) do
-      Types::Str[key: 'my.key', value: 'old', entity_slug: 'backend']
+      Types::Str[key: 'my.key', value: ['old'], entity_slug: 'backend']
     end
 
     before do
@@ -124,11 +124,19 @@ RSpec.describe 'String management', type: :request do
         expect(strs.map { |str| str['entity_slug'] }).to eq(%w[myslug myslug myslug myslug])
       end
     end
+
+    context 'filtering by match' do
+      before do
+        build_list(:str, 4, key: '').each do |str|
+          db.strings.add(str)
+        end
+      end
+    end
   end
 
   context 'deletion' do
     let(:str) do
-      Types::Str[key: 'my.key', value: 'old', entity_slug: 'backend']
+      Types::Str[key: 'my.key', value: ['old'], entity_slug: 'backend']
     end
 
     before do

@@ -6,11 +6,11 @@ require 'db'
 RSpec.describe Db::Ops::StringsToYaml do
   let(:strings) do
     [
-      build(:str, key: 'd.d.c.b', value: '5'),
-      build(:str, key: 'd.c.a.a', value: '4'),
-      build(:str, key: 'c.b',     value: '3'),
-      build(:str, key: 'b.c',     value: '2'),
-      build(:str, key: 'a.a.b.a', value: '1')
+      build(:str, key: 'd.d.c.b', value: ['5']),
+      build(:str, key: 'd.c.a.a', value: ['4']),
+      build(:str, key: 'c.b',     value: ['3']),
+      build(:str, key: 'b.c',     value: ['2']),
+      build(:str, key: 'a.a.b.a', value: ['1'])
     ]
   end
 
@@ -61,7 +61,7 @@ RSpec.describe Db::Ops::StringsToYaml do
   context 'with a string with multiple values' do
     let(:strings) do
       [
-        build(:str, key: 'single_value', value: '5'),
+        build(:str, key: 'single_value', value: ['5']),
         build(:str, key: 'multi_value', value: %w[1 2 3 4])
       ]
     end
