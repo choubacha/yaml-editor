@@ -12,7 +12,6 @@ export const addString = (key, value) => {
 };
 
 export const updateString = (key, value) => {
-  console.log("hit update");
   return dispatch => {
     return api.strings.put(key, { value, entity_slug: "testing" }).then(response => {
       const {

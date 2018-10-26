@@ -28,7 +28,7 @@ export default class App extends React.Component {
               </Tab>
             ))}
           </Tablist>
-          <Pane padding={16} flex="1">
+          <Pane flex="1">
             {this.state.tabs.map((tab, index) => (
               <Pane
                 key={tab}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Pane, SearchInput, Autocomplete, TextInput, Button } from "evergreen-ui";
+import { Pane, Table, SearchInput, Autocomplete, TextInput, Button } from "evergreen-ui";
 
 import Result from "./Result";
 
@@ -32,7 +32,18 @@ export default class Search extends React.PureComponent {
         </Autocomplete>
 
         <Pane display="flex" flexDirection="column" width="90vw" marginTop="2rem">
-          {resultElements}
+          <Table>
+            <Table.Head>
+              <Table.TextHeaderCell width="100%" flexShrink={0} flexGrow={2}>
+                Key Name
+              </Table.TextHeaderCell>
+              <Table.TextHeaderCell width="100%" flexShrink={0} flexGrow={2}>
+                Last Activity
+              </Table.TextHeaderCell>
+              <Table.TextHeaderCell flexBasis={200} flexShrink={0} flexGrow={0} />
+            </Table.Head>
+            <Table.Body>{resultElements}</Table.Body>
+          </Table>
         </Pane>
       </Pane>
     );
