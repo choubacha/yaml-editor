@@ -8,6 +8,7 @@ export default class Result extends React.PureComponent {
     const { resultValue } = this.props;
 
     this.state = {
+      original: resultValue,
       value: resultValue
     };
   }
@@ -16,9 +17,7 @@ export default class Result extends React.PureComponent {
 
     return (
       <Card
-        elevation={1}
-        marginTop="1rem"
-        marginBottom="1rem"
+        marginBottom="0.5rem"
         paddingTop="0.8rem"
         paddingBottom="0.8rem"
         paddingLeft="1rem"
@@ -27,11 +26,17 @@ export default class Result extends React.PureComponent {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        flex="1"
       >
-        <Pane flex="1">{resultKey}</Pane>
-        <TextInput flex="1" onChange={e => this.setState({ value: e.target.value })} value={this.state.value} />
-        <Button onClick={() => this.props.onUpdateString(resultKey, this.state.value)}>Save</Button>
+        <Pane flex="3">{resultKey}</Pane>
+        <TextInput flex="3" onChange={e => this.setState({ value: e.target.value })} value={this.state.value} />
+        <Pane flex="1" textAlign="right">
+          <Button height={24} appearance="success" onClick={() => this.props.onUpdateString(resultKey, this.state.value)}>
+            Update
+          </Button>
+          <Button height={24} marginLeft={5} appearance="minimal" intent="danger" onClick={e => this.setState({ value: this.state.original })}>
+            Cancel
+          </Button>
+        </Pane>
       </Card>
     );
   }

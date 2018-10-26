@@ -13,7 +13,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Pane width="800px" marginLeft="auto" marginRight="auto" marginTop="2rem" marginBottom="2rem">
+      <Pane width="90vw" marginLeft="auto" marginRight="auto" marginTop="2rem" marginBottom="2rem">
         <Pane height={120}>
           <Tablist marginBottom={16} flexBasis={240} marginRight={24}>
             {this.state.tabs.map((tab, index) => (
