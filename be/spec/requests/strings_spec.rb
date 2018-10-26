@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'String management', type: :request do # rubocop:disable Metrics/BlockLength
+RSpec.describe 'String management', type: :request do
   # TODO: Change to work with a scanned directory?
   let(:db) { Db.new([]) }
 

@@ -19,6 +19,10 @@ class Db
       @strings[key]
     end
 
+    def for_entity(slug)
+      all.select { |str| str.entity_slug == slug }
+    end
+
     def delete(key)
       @strings.delete(key)
     end

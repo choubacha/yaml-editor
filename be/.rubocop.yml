@@ -6,3 +6,8 @@ Rails/SafeNavigation:
 # http://rubocop.readthedocs.io/en/latest/cops_metrics/#metricslinelength
 Metrics/LineLength:
   Max: 120
+
+Metrics/BlockLength:
+  CountComments: false
+  Exclude:
+    - spec/**/*.rb
