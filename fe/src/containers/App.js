@@ -7,11 +7,13 @@ import Search from "../components/Search";
 
 class AppContainer extends React.Component {
   componentDidMount() {
-    this.props.keyActions.fetchKeys();
+    this.props.keyActions.fetchStrings();
   }
 
   render() {
-    return <Search />;
+    const results = this.props.results;
+
+    return <Search results={results} />;
   }
 }
 
@@ -20,7 +22,11 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => {
-  return state;
+  const { strings } = state;
+
+  return {
+    results: strings
+  };
 };
 
 export default connect(

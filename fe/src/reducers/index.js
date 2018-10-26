@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import keys from "./keys";
+import strings from "./strings";
 
 export default combineReducers({
-  keys
+  strings
 });
