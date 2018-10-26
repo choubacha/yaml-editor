@@ -126,10 +126,24 @@ RSpec.describe 'String management', type: :request do
     end
 
     context 'filtering by match' do
+      let(:strings) do
+        [
+          build(:str, key: 'apple.banana'),
+          build(:str, key: 'banana.apple'),
+          build(:str, key: 'peanut.butter.apple.banana'),
+          build(:str, key: 'peanut.butter')
+        ]
+      end
+
       before do
-        build_list(:str, 4, key: '').each do |str|
-          db.strings.add(str)
-        end
+        strings.each { |str| db.strings.add(str) }
+      end
+
+      it 'returns only those strings that match' do
+        get '/strings', params: { filter: { match: 'ape' } }
+
+        strs = JSON[response.body]
+        expect(strs.size).to eq 4
       end
     end
   end

@@ -9,6 +9,8 @@ class StringsController < ApplicationController
               else
                 db.strings.all
               end
+    term = params.dig(:filter, :match)
+    strings = Db::Ops::StringKeyMatch.new(strings, term).match if term.present?
     render json: strings
   end
 
