@@ -16,7 +16,7 @@ module Types
   # Represents a translatable string with it's associated key.
   class Str < Dry::Struct
     attribute :key, Key
-    attribute :value, Coercible::String
+    attribute :value, Types::Coercible::String
     attribute :entity_slug, Slug
   end
 
