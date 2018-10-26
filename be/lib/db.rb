@@ -9,12 +9,10 @@ require 'db/strings'
 class Db
   attr_reader :entities, :strings
 
-  def initialize(dir)
-    raise 'A directory must be specified' if File.directory?(dir)
-
+  def initialize(files)
+    @files = files
     @entities = []
     @strings = Strings.new
-    scan!
   end
 
   # Loads the current known directory and replaces the contents of the database.

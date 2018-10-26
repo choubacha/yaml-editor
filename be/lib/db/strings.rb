@@ -22,5 +22,9 @@ class Db
     def delete(key)
       @strings.delete(key)
     end
+
+    def all
+      @strings.values
+    end
   end
 end

@@ -28,4 +28,10 @@ RSpec.describe Db::Strings do
     expect(strings.delete('mykey')).to eq str
     expect(strings.find('mykey')).to be_nil
   end
+
+  it 'can get all strings' do
+    strings.add(str)
+
+    expect(strings.all).to eq [str]
+  end
 end
