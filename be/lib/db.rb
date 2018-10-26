@@ -2,6 +2,7 @@
 
 require 'types'
 require 'db/strings'
+require 'db/entities'
 # require 'db/entities'
 
 # An instance of Db can be used to store the state of the keys and strings in memory. Use it to
@@ -11,7 +12,7 @@ class Db
 
   def initialize(files)
     @files = files
-    @entities = []
+    @entities = Entities.new
     @strings = Strings.new
   end
 
