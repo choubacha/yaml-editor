@@ -1,0 +1,8 @@
+---
+en:
+  backend:
+    success: "Hello, gem!"
+    nested:
+      success:
+        "More, gem!"
+

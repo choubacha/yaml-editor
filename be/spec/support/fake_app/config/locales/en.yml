@@ -1,0 +1,7 @@
+---
+en:
+  success: "Hello, root!"
+  nested:
+    success:
+      "More, root!"
+

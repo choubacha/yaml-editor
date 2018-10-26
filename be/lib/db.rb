@@ -19,11 +19,63 @@ class Db
 
   # Loads the current known directory and replaces the contents of the database.
   def scan!
-    # TODO
+    @files.each do |file_path|
+      entities.add Types::Entity[
+        slug: slug(file_path),
+        path: file_path,
+        type: type(file_path)
+      ]
+
+      yaml_data = YAML.load(File.read(file_path))
+
+      hash_to_dot(yaml_data["en"]).each do |key, value|
+        strings.add Types::Str[key: key, value: [value], entity_slug: slug(file_path)]
+      end
+    end
   end
 
   # Writes out the yaml files. If an entity is specified it will only dump that entity.
   def dump(entity: nil)
     # TODO
   end
+
+  private
+
+  def slug(file_path)
+    "#{type(file_path)}#{name(file_path)}"
+  end
+
+  def type(file_path)
+    if file_path.match? '/apps'
+      :engine
+    elsif file_path.match? '/gems'
+      :gem
+    else
+      :root
+    end
+  end
+
+  def name(file_path)
+    case type(file_path)
+    when :engine
+      "-#{file_path.match(%r{/apps/(?<name>\w+)/})[:name]}"
+    when :gem
+      "-#{file_path.match(%r{gems/(?<name>\w+)/})[:name]}"
+    end
+  end
+
+  def hash_to_dot(object, prefix = nil)
+    if object.is_a? Hash
+      object.map do |key, value|
+        if prefix
+          hash_to_dot value, "#{prefix}.#{key}"
+        else
+          hash_to_dot value, "#{key}"
+        end
+      end.reduce(&:merge)
+    else
+      {prefix => object}
+    end
+  end
+
 end

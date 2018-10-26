@@ -1,0 +1,7 @@
+---
+en:
+  web:
+    success: "Hello, engine!"
+    nested:
+      success:
+        "More, engine!"
