@@ -31,9 +31,6 @@ gem 'dry-types', '~> 0.13.2'
 
 gem 'rack-cors', require: 'rack/cors'
 
-gem 'amatch'
-gem 'fuzzy_match'
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger
   # console
