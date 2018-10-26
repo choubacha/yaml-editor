@@ -6,7 +6,7 @@ FactoryBot.define do
   factory :entity, class: Types::Entity do
     before(:create) { raise 'No persistance, just use build' }
 
-    slug { Faker::App.name.downcase }
+    slug { Faker::App.name.underscore }
     path { Faker::File.file_name }
     type { Types::EntityType.values.sample }
 
