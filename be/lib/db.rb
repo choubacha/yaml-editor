@@ -3,6 +3,7 @@
 require 'types'
 require 'db/strings'
 require 'db/entities'
+require 'db/ops'
 # require 'db/entities'
 
 # An instance of Db can be used to store the state of the keys and strings in memory. Use it to
