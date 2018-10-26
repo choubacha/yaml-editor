@@ -143,7 +143,7 @@ RSpec.describe 'String management', type: :request do
         get '/strings', params: { filter: { match: 'app' } }
 
         strs = JSON[response.body]
-        expect(strs.size).to eq 3
+        expect(strs.size).to eq 2
       end
     end
   end
