@@ -7,7 +7,7 @@ class ApplicationController < ActionController::API
   rescue_from Dry::Struct::Error, with: :render_input_error
 
   def db
-    @db ||= Db.new([])
+    STRING_DB
   end
 
   def render_input_error(exception)

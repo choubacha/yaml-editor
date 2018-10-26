@@ -12,6 +12,8 @@ class StringsController < ApplicationController
     str = Types::Str[attrs.to_h.symbolize_keys]
 
     db.strings.add(str)
+
+    render json: str
   end
 
   def show
