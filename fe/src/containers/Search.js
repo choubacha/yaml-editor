@@ -13,7 +13,7 @@ class SearchContainer extends React.Component {
   render() {
     const { results, stringActions } = this.props;
 
-    return <Search results={results} onUpdateString={stringActions.updateString} />;
+    return <Search results={results} onUpdateString={stringActions.updateString} onSearch={stringActions.fetchStrings} />;
   }
 }
 

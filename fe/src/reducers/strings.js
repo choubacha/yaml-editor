@@ -1,15 +1,16 @@
-export default (state = {}, action) => {
+export default (state = [], action) => {
   switch (action.type) {
     case "FETCH_STRINGS": {
       const strings = action.payload;
+      console.log("repsonse", action.payload);
 
-      return { ...state, ...strings };
+      return [...strings];
     }
 
-    case "ADD_STRING": {
-      const { key } = action.payload;
-      return { ...state, [key]: action.payload };
-    }
+    // case "ADD_STRING": {
+    //   const { key } = action.payload;
+    //   return { ...state, [key]: action.payload };
+    // }
     default:
       return state;
   }

@@ -23,6 +23,7 @@
 // GET /strings?filter[entity-name]=root
 
 const axios = require("axios");
+const qs = require("qs");
 
 const host = "http://localhost:3000";
 
@@ -33,12 +34,16 @@ export default {
     }
   },
   strings: {
-    get: (key, params = {}) => {
-      let url = `${host}/strings`;
+    get: (params = {}) => {
+      let url = `${host}/strings/`;
 
-      if (key) {
+      if (params.key) {
         url = `${url}/${key}`;
+
+        let { key, ...params } = params;
       }
+
+      url = `${url}?${qs.stringify(params)}`;
 
       return axios.get(url);
     },

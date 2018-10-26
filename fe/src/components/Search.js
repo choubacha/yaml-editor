@@ -7,7 +7,7 @@ import "../App.css";
 
 export default class Search extends React.PureComponent {
   render() {
-    const { results, onUpdateString } = this.props;
+    const { results, onUpdateString, onSearch } = this.props;
     const foundKeys = Object.keys(results);
 
     const resultElements = Object.values(results).map(({ key: resultKey, value: resultValue }) => {
@@ -16,20 +16,7 @@ export default class Search extends React.PureComponent {
 
     return (
       <Pane display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-        <Autocomplete title="i18n Keys" items={foundKeys}>
-          {({ key, getInputProps, getRef, inputValue, openMenu }) => (
-            <Pane key={key} innerRef={getRef} display="flex">
-              <TextInput
-                height={60}
-                width={"90vw"}
-                placeholder="Search for i18n Keys..."
-                value={inputValue}
-                onFocus={openMenu}
-                {...getInputProps()}
-              />
-            </Pane>
-          )}
-        </Autocomplete>
+        <TextInput height={60} width={"90vw"} placeholder="Search for i18n Keys..." onChange={e => onSearch({ filter: { match: e.target.value } })} />
 
         <Pane display="flex" flexDirection="column" width="90vw" marginTop="2rem">
           <Table>

@@ -26,15 +26,10 @@ export const updateString = (key, value) => {
   };
 };
 
-export const fetchStrings = () => {
+export const fetchStrings = params => {
   return dispatch => {
-    return api.strings.get().then(response => {
+    return api.strings.get(params).then(response => {
       let { data: strings } = response;
-      strings = strings.reduce((acc, string) => {
-        acc[string.key] = string;
-
-        return acc;
-      }, {});
 
       dispatch({
         type: "FETCH_STRINGS",
