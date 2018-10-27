@@ -23,6 +23,7 @@ class StringsController < ApplicationController
       str = Types::Str[attrs.to_h.symbolize_keys]
 
       db.strings.add(str)
+      db.dump
 
       render json: str
     end
@@ -42,6 +43,7 @@ class StringsController < ApplicationController
     if str
       new_str = str.new(value: params[:value])
       db.strings.update(new_str)
+      db.dump
 
       render json: new_str
     else
@@ -52,6 +54,7 @@ class StringsController < ApplicationController
   def destroy
     str = db.strings.delete(params[:id])
     if str
+      db.dump
       render json: str
     else
       render json: { message: 'String not found' }, status: 404

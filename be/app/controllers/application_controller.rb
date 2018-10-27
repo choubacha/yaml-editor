@@ -13,4 +13,8 @@ class ApplicationController < ActionController::API
   def render_input_error(exception)
     render json: { message: exception.message }, status: 422
   end
+
+  def save_db_to_file
+    db.dump
+  end
 end

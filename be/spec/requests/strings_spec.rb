@@ -7,9 +7,8 @@ RSpec.describe 'String management', type: :request do
   let(:db) { Db.new([]) }
 
   before do
-    allow_any_instance_of(ApplicationController)
-      .to receive(:db)
-      .and_return(db)
+    stub_const("STRING_DB", db)
+    allow(db).to receive(:dump)
   end
 
   context 'creation' do
@@ -18,6 +17,7 @@ RSpec.describe 'String management', type: :request do
 
       expect(response).to be_successful
       expect(db.strings.find('my.key').value).to eq ['some string!']
+      expect(db).to have_received(:dump)
     end
 
     it 'can create a string with multiple values' do
@@ -25,6 +25,7 @@ RSpec.describe 'String management', type: :request do
 
       expect(response).to be_successful
       expect(db.strings.find('my.key').value).to eq ['some string!', 'another string!']
+      expect(db).to have_received(:dump)
     end
 
     context 'with invalid inputs' do
@@ -37,6 +38,7 @@ RSpec.describe 'String management', type: :request do
         post '/strings', params: { key: 'my.key', value: ['some string!'], entity_slug: 'backend' }
         expect(response.status).to eq 422
         expect(JSON[response.body]).to eq('message' => 'Key already exists for string')
+        expect(db).to have_received(:dump).once
       end
 
       it 'handles missing keys' do
@@ -72,6 +74,7 @@ RSpec.describe 'String management', type: :request do
       expect(response).to be_successful
 
       expect(db.strings.find('my.key').value).to eq ['new']
+      expect(db).to have_received(:dump)
     end
 
     context 'with invalid inputs' do
@@ -80,6 +83,7 @@ RSpec.describe 'String management', type: :request do
 
         expect(response.status).to eq 404
         expect(JSON[response.body]).to eq('message' => 'String not found')
+        expect(db).to_not have_received(:dump)
       end
 
       it 'handles missing json keys' do
@@ -107,6 +111,7 @@ RSpec.describe 'String management', type: :request do
       expect(response).to be_successful
 
       expect(JSON[response.body]).to eq([str.to_h.stringify_keys])
+      expect(db).to_not have_received(:dump)
     end
 
     context 'filtering by entity' do
@@ -164,6 +169,7 @@ RSpec.describe 'String management', type: :request do
       expect(response).to be_successful
 
       expect(db.strings.all).to be_empty
+      expect(db).to have_received(:dump)
     end
 
     it 'returns 404 if key is missing' do

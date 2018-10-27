@@ -1,0 +1,4 @@
+---
+en:
+  backend:
+    message: Hello, from the backend gem

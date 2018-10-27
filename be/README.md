@@ -1,24 +1,13 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Project requirements
+- Ruby `2.5.1`
 
-Things you may want to cover:
+## Setup
+- `bundle install`
 
-* Ruby version
+## Getting Started
+Set the `ROOT_PATH` environment variable to your projects root and then start
+the Rails server: `ROOT_PATH="./../fake_app" rails server`
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Currently, this project only supports one `en.yml` per `config/locales` directory.
