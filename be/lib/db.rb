@@ -17,8 +17,11 @@ class Db
     @strings = Strings.new
   end
 
+  # TODO support array
   # Loads the current known directory and replaces the contents of the database.
   def scan!
+    @entities = Entities.new
+    @strings = Strings.new
     @files.each do |file_path|
       entities.add Types::Entity[
         slug: slug(file_path),
@@ -35,8 +38,15 @@ class Db
   end
 
   # Writes out the yaml files. If an entity is specified it will only dump that entity.
-  def dump(entity: nil)
-    # TODO
+  def dump(only_entity: nil, target: nil)
+    _entities = only_entity.present? ? [only_entity] : entities.all
+
+    _entities.each do |entity|
+      _strings = strings.for_entity(entity.slug)
+      File.open(entity.path, "w+") do |file|
+        file << Db::Ops::StringsToYaml.new(_strings).build.to_yaml
+      end
+    end
   end
 
   private

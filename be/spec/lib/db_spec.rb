@@ -1,8 +1,6 @@
 # frozen_string_literal: true
-require "rails_helper"
 
-require 'db'
-require 'types'
+require 'rails_helper'
 
 RSpec.describe Db do
   let(:files) { [root_file_path, engine_file_path, gem_file_path] }
@@ -48,4 +46,29 @@ RSpec.describe Db do
     end
   end
 
+  describe '#dump' do
+    let(:db) { Db.new([root_file_path]) }
+    let(:new_string) do
+      build(:str, key: "success", value: ["yay"], entity_slug: 'root')
+    end
+
+    before { files.each { |path| FileUtils.cp(path, "#{path}.backup")} }
+
+    after do
+      files.each { |path| FileUtils.cp("#{path}.backup", path) }
+      files.each { |path| FileUtils.rm("#{path}.backup") }
+    end
+
+    it 'writes the yaml file back out to its original path' do
+      db.scan!
+      db.strings.update(new_string)
+      db.dump
+
+      expect { db.scan! }.to_not change { db.strings.all.size }
+
+      expect(db.strings.find("success").value).to eq(new_string.value)
+      expect(db.strings.find("nested.success").value).to eq(["More, root!"])
+      expect(File.exists?(root_file_path)).to be_truthy
+    end
+  end
 end
