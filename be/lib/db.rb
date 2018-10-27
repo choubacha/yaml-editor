@@ -27,6 +27,7 @@ class Db
   end
 
   # Writes out the yaml files. If an entity is specified it will only dump that entity.
+  # TODO: We may be able to use YAML::Store here
   def dump(only_entity: nil)
     eligible = only_entity.present? ? [entities.find(only_entity)] : entities.all
 

@@ -43,4 +43,8 @@ RSpec.describe Types do
         .to raise_error(Dry::Types::ConstraintError)
     end
   end
+
+  describe Types::Value do
+    xit 'allows all valid YAML values'
+  end
 end

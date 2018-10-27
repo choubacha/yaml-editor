@@ -14,7 +14,7 @@ module Types
   Key = Strict::String.constrained(format: /\A(?!\.)(\.?([\w\-]+))+\z/)
 
   # A string value is single piece of data associated with a key
-  Value = Types::Coercible::String.constrained(min_size: 1)
+  Value = Types::Coercible::String
 
   # Represents a translatable string with it's associated key.
   class Str < Dry::Struct
