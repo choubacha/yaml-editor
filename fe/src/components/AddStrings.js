@@ -27,8 +27,8 @@ export default class AddStrings extends React.Component {
 
     const rowElements = rows.map((_row, index) => {
       return (
-        <Table.Row key={index} height="auto" paddingTop="0.5rem" paddingBottom="0.5rem">
-          <Table.TextCell width="100%" flexShrink={0} flexGrow={2}>
+        <Table.Row className="table-row" key={index} height="auto" paddingTop="0.5rem" paddingBottom="0.5rem">
+          <Table.TextCell width="100%" flexShrink={0} flexGrow={1}>
             <TextInput
               fontFamily="mono"
               flex="1"
@@ -37,13 +37,17 @@ export default class AddStrings extends React.Component {
               onChange={e => this.updateRow(index, { key: e.target.value })}
             />
           </Table.TextCell>
-          <Table.TextCell flexShrink={0} flexGrow={3}>
-            <Pane display="flex" flexDirection="column" alignItems="flex-start">
-              <TextInput flex="1" name="new-string-value" placeholder="Value" onChange={e => this.updateRow(index, { values: [e.target.value] })} />
-            </Pane>
+          <Table.TextCell width="100%" flexShrink={0} flexGrow={3}>
+            <TextInput
+              width="100%"
+              flex="1"
+              name="new-string-value"
+              placeholder="Value"
+              onChange={e => this.updateRow(index, { values: [e.target.value] })}
+            />
           </Table.TextCell>
           <Table.TextCell flexBasis={100} flexShrink={0} flexGrow={0} textAlign="right">
-            <Button height={20} appearance="primary" intent="warning" onClick={() => this.props.onAddString(rows[index])}>
+            <Button className="save-button" height={20} appearance="primary" onClick={() => this.props.onAddString(rows[index])}>
               Save
             </Button>
           </Table.TextCell>
@@ -55,7 +59,7 @@ export default class AddStrings extends React.Component {
         <Button onClick={() => this.onAddRow()}>Add Row</Button>
         <Table flexDirection="column" width="90vw" marginTop="1rem">
           <Table.Head>
-            <Table.TextHeaderCell width="100%" flexShrink={0} flexGrow={2}>
+            <Table.TextHeaderCell width="100%" flexShrink={0} flexGrow={1}>
               <strong>Key Name</strong>
             </Table.TextHeaderCell>
             <Table.TextHeaderCell width="100%" flexShrink={0} flexGrow={3}>

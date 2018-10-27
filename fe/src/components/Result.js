@@ -32,7 +32,7 @@ export default class Result extends React.PureComponent {
     });
 
     return (
-      <Table.Row key={resultKey} height="auto">
+      <Table.Row className="table-row" key={resultKey} height="auto">
         <Table.TextCell width="100%" flexShrink={0} flexGrow={2}>
           <Text fontSize={16} fontFamily={"mono"}>
             {resultKey}
@@ -44,7 +44,7 @@ export default class Result extends React.PureComponent {
           </Pane>
         </Table.TextCell>
         <Table.TextCell flexBasis={100} flexShrink={0} flexGrow={0} textAlign="right">
-          <Button height={20} appearance="primary" intent="warning" onClick={() => this.props.onUpdateString(resultKey, this.state.values)}>
+          <Button className="save-button" height={20} appearance="primary" onClick={() => this.props.onUpdateString(resultKey, this.state.values)}>
             Save
           </Button>
         </Table.TextCell>

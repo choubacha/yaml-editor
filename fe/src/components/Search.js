@@ -3,8 +3,6 @@ import { Pane, Table, SearchInput, Text } from "evergreen-ui";
 
 import Result from "./Result";
 
-import "../App.css";
-
 export default class Search extends React.PureComponent {
   render() {
     const { entitySlug, results, onUpdateString, onSearch } = this.props;
