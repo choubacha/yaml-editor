@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as stringActions from "../actions";
+import * as stringActions from "../actions/strings";
 
 import Search from "../components/Search";
 

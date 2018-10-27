@@ -1,27 +1,3 @@
-// Entity
-// type: [:engine, :root, :gem]
-// name: str
-// path: str
-
-// String
-// key: str
-// value: str
-// entity: str
-
-// Routes
-// GET /entities
-
-// GET /strings/:key => String
-// PUT /strings/:key
-// POST /strings/:key
-// DELETE /strings/:key
-// GET /strings
-// GET /strings?filter[prefix]=activerecord.errors
-// GET /strings?filter[includes]=error
-// GET /strings?filter[entity-name]=organic
-// GET /strings?filter[entity-name]=backend
-// GET /strings?filter[entity-name]=root
-
 const axios = require("axios");
 const qs = require("qs");
 

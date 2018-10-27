@@ -9,8 +9,8 @@ export default class Search extends React.PureComponent {
   render() {
     const { entitySlug, results, onUpdateString, onSearch } = this.props;
 
-    const resultElements = Object.values(results).map(({ key: resultKey, value: resultValue }) => {
-      return <Result key={resultKey} entitySlug={entitySlug} resultKey={resultKey} resultValue={resultValue} onUpdateString={onUpdateString} />;
+    const resultElements = Object.values(results).map(({ key: resultKey, value: resultValues }) => {
+      return <Result key={resultKey} entitySlug={entitySlug} resultKey={resultKey} resultValues={resultValues} onUpdateString={onUpdateString} />;
     });
 
     return (
@@ -28,20 +28,18 @@ export default class Search extends React.PureComponent {
         </Pane>
 
         {!!results.length && (
-          <Pane display="flex" flexDirection="column" width="90vw" marginTop="2rem">
-            <Table>
-              <Table.Head>
-                <Table.TextHeaderCell width="100%" flexShrink={0} flexGrow={2}>
-                  Key Name
-                </Table.TextHeaderCell>
-                <Table.TextHeaderCell width="100%" flexShrink={0} flexGrow={2}>
-                  Last Activity
-                </Table.TextHeaderCell>
-                <Table.TextHeaderCell flexBasis={100} flexShrink={0} flexGrow={0} />
-              </Table.Head>
-              <Table.Body>{resultElements}</Table.Body>
-            </Table>
-          </Pane>
+          <Table flexDirection="column" width="90vw" marginTop="2rem">
+            <Table.Head>
+              <Table.TextHeaderCell width="100%" flexShrink={0} flexGrow={2}>
+                <strong>Key Name</strong>
+              </Table.TextHeaderCell>
+              <Table.TextHeaderCell width="100%" flexShrink={0} flexGrow={3}>
+                <strong>Content</strong>
+              </Table.TextHeaderCell>
+              <Table.TextHeaderCell flexBasis={100} flexShrink={0} flexGrow={0} />
+            </Table.Head>
+            <Table.Body>{resultElements}</Table.Body>
+          </Table>
         )}
       </Pane>
     );
