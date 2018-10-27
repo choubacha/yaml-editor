@@ -17,39 +17,52 @@ class Db
     @strings = Strings.new
   end
 
-  # TODO support array
+  # TODO: support array values
   # Loads the current known directory and replaces the contents of the database.
   def scan!
-    @entities = Entities.new
-    @strings = Strings.new
     @files.each do |file_path|
-      entities.add Types::Entity[
-        slug: slug(file_path),
-        path: file_path,
-        type: type(file_path)
-      ]
-
-      yaml_data = YAML.load(File.read(file_path))
-
-      hash_to_dot(yaml_data["en"]).each do |key, value|
-        strings.add Types::Str[key: key, value: [value], entity_slug: slug(file_path)]
-      end
+      create_entity(file_path)
+      create_strings(file_path)
     end
   end
 
   # Writes out the yaml files. If an entity is specified it will only dump that entity.
-  def dump(only_entity: nil, target: nil)
-    _entities = only_entity.present? ? [only_entity] : entities.all
+  def dump(only_entity: nil)
+    eligible = only_entity.present? ? [entities.find(only_entity)] : entities.all
 
-    _entities.each do |entity|
-      _strings = strings.for_entity(entity.slug)
-      File.open(entity.path, "w+") do |file|
-        file << Db::Ops::StringsToYaml.new(_strings).build.to_yaml
+    eligible.each do |entity|
+      File.open(entity.path, 'w+') do |file|
+        file << Db::Ops::StringsToYaml.new(strings.for_entity(entity.slug))
+          .build.to_yaml
       end
     end
   end
 
   private
+
+  def flush!
+    @entities = Entities.new
+    @strings = Strings.new
+  end
+
+  def create_entity(file_path)
+    entities.add Types::Entity[
+      slug: slug(file_path),
+      path: file_path,
+      type: type(file_path)
+    ]
+  end
+
+  def create_strings(file_path)
+    yaml_data = YAML.safe_load(File.read(file_path))
+    Db::Ops::YamlToStrings.new(yaml_data).build.each do |key, value|
+      strings.add Types::Str[
+        key: key,
+        value: [value],
+        entity_slug: slug(file_path)
+      ]
+    end
+  end
 
   def slug(file_path)
     "#{type(file_path)}#{name(file_path)}"
@@ -73,19 +86,4 @@ class Db
       "-#{file_path.match(%r{gems/(?<name>\w+)/})[:name]}"
     end
   end
-
-  def hash_to_dot(object, prefix = nil)
-    if object.is_a? Hash
-      object.map do |key, value|
-        if prefix
-          hash_to_dot value, "#{prefix}.#{key}"
-        else
-          hash_to_dot value, "#{key}"
-        end
-      end.reduce(&:merge)
-    else
-      {prefix => object}
-    end
-  end
-
 end

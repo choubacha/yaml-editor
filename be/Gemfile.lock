@@ -80,6 +80,7 @@ GEM
     erubi (1.7.1)
     factory_bot (4.11.1)
       activesupport (>= 3.0.0)
+    fakefs (0.18.0)
     faker (1.9.1)
       i18n (>= 0.7)
     ffi (1.9.25)
@@ -200,6 +201,7 @@ DEPENDENCIES
   dry-struct (~> 0.6.0)
   dry-types (~> 0.13.2)
   factory_bot
+  fakefs
   faker
   listen (>= 3.0.5, < 3.2)
   puma (~> 3.11)

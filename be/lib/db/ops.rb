@@ -9,4 +9,5 @@ class Db
 end
 
 require 'db/ops/strings_to_yaml'
+require 'db/ops/yaml_to_strings'
 require 'db/ops/string_key_match'
