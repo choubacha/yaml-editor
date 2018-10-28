@@ -7,7 +7,9 @@ import AddStrings from "../components/AddStrings";
 
 class AddStringsContainer extends React.Component {
   render() {
-    return <AddStrings onAddString={this.props.stringActions.addString} />;
+    const { entities, stringActions } = this.props;
+
+    return <AddStrings entities={entities} onAddString={stringActions.addString} />;
   }
 }
 

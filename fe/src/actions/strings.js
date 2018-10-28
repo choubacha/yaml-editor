@@ -2,7 +2,7 @@ import api from "../lib/api";
 
 const MINIMUM_SEARCH_LENGTH = 3;
 
-export const addString = ({ key, values, entitySlug }) => {
+export const addString = (entitySlug, { key, values }) => {
   return dispatch => {
     return api.strings.post({ key, value: values, entity_slug: entitySlug }).then(response => {
       dispatch({

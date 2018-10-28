@@ -1,17 +1,21 @@
 import React from "react";
-import { Table, Pane, TextInput, Button } from "evergreen-ui";
+import { Combobox, Table, Pane, TextInput, Button } from "evergreen-ui";
 
 export default class AddStrings extends React.Component {
   constructor(props) {
     super(props);
 
+    const { entities } = this.props;
+    const first = entities[0];
+
     this.state = {
-      rows: [{ key: "", values: [], entitySlug: "identity" }]
+      selectedEngine: { label: first.display, value: first.slug },
+      rows: [{ key: "", values: [], entitySlug: first.slug }]
     };
   }
 
   onAddRow = () => {
-    this.setState({ rows: [...this.state.rows, { key: "", values: [], entitySlug: "identity" }] });
+    this.setState({ rows: [...this.state.rows, { key: "", values: [] }] });
   };
 
   updateRow = (index, data) => {
@@ -23,7 +27,8 @@ export default class AddStrings extends React.Component {
   };
 
   render() {
-    const { rows } = this.state;
+    const { rows, selectedEngine } = this.state;
+    const { entities } = this.props;
 
     const rowElements = rows.map((_row, index) => {
       return (
@@ -47,17 +52,39 @@ export default class AddStrings extends React.Component {
             />
           </Table.TextCell>
           <Table.TextCell flexBasis={100} flexShrink={0} flexGrow={0} textAlign="right">
-            <Button className="save-button" height={20} appearance="primary" onClick={() => this.props.onAddString(rows[index])}>
+            <Button
+              className="save-button"
+              height={20}
+              appearance="primary"
+              onClick={() => this.props.onAddString(selectedEngine.value, rows[index])}
+            >
               Save
             </Button>
           </Table.TextCell>
         </Table.Row>
       );
     });
+
+    const entityLabels = entities.map(entity => {
+      return { label: entity.display, value: entity.slug };
+    });
+
     return (
       <Pane>
-        <Button onClick={() => this.onAddRow()}>Add Row</Button>
-        <Table flexDirection="column" width="90vw" marginTop="1rem">
+        <Pane display="flex">
+          <Combobox
+            openOnFocus
+            items={entityLabels}
+            marginBottom="1rem"
+            marginRight="2rem"
+            selectedItem={selectedEngine}
+            itemToString={entityLabel => entityLabel.label}
+            onChange={selected => this.setState({ selectedEngine: selected })}
+          />
+
+          <Button onClick={() => this.onAddRow()}>Add Row</Button>
+        </Pane>
+        <Table flexDirection="column" width="100%">
           <Table.Head>
             <Table.TextHeaderCell width="100%" flexShrink={0} flexGrow={1}>
               <strong>Key Name</strong>

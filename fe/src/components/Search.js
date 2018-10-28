@@ -62,7 +62,7 @@ export default class Search extends React.PureComponent {
           <SearchInput
             innerRef={input => (this.textInput = input)}
             height={60}
-            width={"90vw"}
+            width={"100%"}
             value={searchValue}
             placeholder="Search for i18n Keys..."
             onChange={this.handleSearch}
@@ -73,7 +73,7 @@ export default class Search extends React.PureComponent {
         </Pane>
 
         {!!results.length && (
-          <Table flexDirection="column" width="90vw" marginTop="2rem">
+          <Table flexDirection="column" width="100%" marginTop="2rem">
             <Table.Head>
               <Table.TextHeaderCell width="100%" flexShrink={0} flexGrow={2}>
                 <strong>Key Name</strong>

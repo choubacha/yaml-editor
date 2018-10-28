@@ -11,6 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+.logo-container {
+  margin: 3rem auto 2rem;
+  text-align: center;
+}
+
+.logo-image {
+  width: 300px;
+}
+
 .save-button {
   display: none;
 }
