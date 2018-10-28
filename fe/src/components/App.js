@@ -28,6 +28,8 @@ export default class App extends React.Component {
   }
 
   render() {
+    const { entities } = this.props;
+
     return (
       <Pane width="90vw" marginLeft="auto" marginRight="auto" marginTop="2rem" marginBottom="2rem">
         <Pane display="flex" justifyContent="space-between">
@@ -68,8 +70,8 @@ export default class App extends React.Component {
               aria-hidden={index !== this.state.selectedIndex}
               display={index === this.state.selectedIndex ? "block" : "none"}
             >
-              {tab === "Find Strings" && <SearchContainer />}
-              {tab === "Add Strings" && <AddStringsContainer />}
+              {tab === "Find Strings" && <SearchContainer entities={entities} />}
+              {tab === "Add Strings" && <AddStringsContainer entities={entities} />}
             </Pane>
           ))}
         </Pane>

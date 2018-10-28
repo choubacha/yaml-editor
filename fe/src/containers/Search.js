@@ -7,9 +7,9 @@ import Search from "../components/Search";
 
 class SearchContainer extends React.Component {
   render() {
-    const { results, stringActions } = this.props;
+    const { entities, results, stringActions } = this.props;
 
-    return <Search results={results} entitySlug={"identity"} onUpdateString={stringActions.updateString} onSearch={stringActions.fetchStrings} />;
+    return <Search results={results} entities={entities} onUpdateString={stringActions.updateString} onSearch={stringActions.fetchStrings} />;
   }
 }
 

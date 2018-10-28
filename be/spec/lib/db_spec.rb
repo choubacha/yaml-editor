@@ -18,9 +18,9 @@ RSpec.describe Db do
   describe '#scan!' do
     let(:expected_entities) do
       [
-        build(:entity, slug: 'root', path: root_file_path, type: :root),
-        build(:entity, slug: 'engine-web', path: engine_file_path, type: :engine),
-        build(:entity, slug: 'gem-backend', path: gem_file_path, type: :gem)
+        build(:entity, slug: 'root', path: root_file_path, display: 'root', type: :root),
+        build(:entity, slug: 'engine-web', path: engine_file_path, display: 'web', type: :engine),
+        build(:entity, slug: 'gem-backend', path: gem_file_path, display: 'backend', type: :gem)
       ]
     end
 

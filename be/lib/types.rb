@@ -28,6 +28,7 @@ module Types
   # An entity can be a gem, engine, or root.
   class Entity < Dry::Struct
     attribute :slug, Slug
+    attribute :display, String
     attribute :path, String
     attribute :type, EntityType
   end

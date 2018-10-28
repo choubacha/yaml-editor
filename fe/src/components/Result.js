@@ -10,6 +10,7 @@ export default class Result extends React.PureComponent {
       values: resultValues
     };
   }
+
   render() {
     const { resultKey, resultValues } = this.props;
 

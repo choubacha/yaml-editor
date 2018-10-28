@@ -1,35 +1,33 @@
 const axios = require("axios");
 const qs = require("qs");
 
-const host = "http://localhost:3000";
-
 axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.baseURL = "http://localhost:3000";
 
 export default {
   entities: {
-    get: (key, params) => {
-      return axios.get("/entities", params);
+    get: _params => {
+      return axios.get("/entities");
     }
   },
   strings: {
     get: (params = {}) => {
-      let url = `${host}/strings/`;
+      let { key, ...rest } = params;
+      let url = `/strings/`;
 
-      if (params.key) {
+      if (key) {
         url = `${url}/${key}`;
-
-        let { key, ...params } = params;
       }
 
-      url = `${url}?${qs.stringify(params)}`;
+      url = `${url}?${qs.stringify(rest)}`;
 
       return axios.get(url);
     },
     post: (params = {}) => {
-      return axios.post(`${host}/strings`, params);
+      return axios.post(`/strings`, params);
     },
     put: (key, params = {}) => {
-      const url = `${host}/strings/${key}`;
+      const url = `/strings/${key}`;
 
       return axios.put(url, params);
     },

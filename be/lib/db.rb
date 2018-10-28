@@ -49,6 +49,7 @@ class Db
   def create_entity(file_path)
     entities.add Types::Entity[
       slug: slug(file_path),
+      display: display(file_path),
       path: file_path,
       type: type(file_path)
     ]
@@ -62,6 +63,17 @@ class Db
         value: [value],
         entity_slug: slug(file_path)
       ]
+    end
+  end
+
+  def display(file_path)
+    case type(file_path)
+    when :root
+      'root'
+    when :engine
+      file_path.match(%r{/apps/(?<name>\w+)/})[:name]
+    when :gem
+      file_path.match(%r{gems/(?<name>\w+)/})[:name]
     end
   end
 
