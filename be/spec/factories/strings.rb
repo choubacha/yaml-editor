@@ -10,7 +10,7 @@ FactoryBot.define do
     value do
       Array.new(rand(1..4)).map { Faker::Lorem.paragraph }
     end
-    entity_slug { Faker::Internet.slug(nil, '_') }
+    entity_slug { 'root' }
 
     initialize_with { new(attributes) }
   end

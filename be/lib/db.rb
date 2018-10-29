@@ -34,7 +34,8 @@ class Db
     eligible.each do |entity|
       File.open(entity.path, 'w+') do |file|
         file << Db::Ops::StringsToYaml.new(strings.for_entity(entity.slug))
-          .build.to_yaml
+                                      .build
+                                      .to_yaml
       end
     end
   end
@@ -57,13 +58,9 @@ class Db
 
   def create_strings(file_path)
     yaml_data = YAML.safe_load(File.read(file_path))
-    Db::Ops::YamlToStrings.new(yaml_data).build.each do |key, value|
-      strings.add Types::Str[
-        key: key,
-        value: [value],
-        entity_slug: slug(file_path)
-      ]
-    end
+    Db::Ops::YamlToStrings.new(yaml_data, entity_slug: slug(file_path))
+                          .build
+                          .each { |str| strings.add(str) }
   end
 
   def display(file_path)
