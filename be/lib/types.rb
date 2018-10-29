@@ -11,7 +11,7 @@ module Types
   Slug = Strict::String.constrained(format: /\A[\w\-]+\z/)
 
   # A key represents a unique path to a string
-  Key = Strict::String.constrained(format: /\A(?!\.)(\.?([\w\-]+))+\z/)
+  Key = Strict::String.constrained(format: %r{\A(?!\.)(\.?([\w/\-]+))+\z})
 
   # A string value is single piece of data associated with a key
   Value = Types::Coercible::String

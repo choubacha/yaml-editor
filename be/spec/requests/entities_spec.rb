@@ -14,7 +14,7 @@ RSpec.describe 'Entities', type: :request do
 
   context 'index' do
     let(:entity) do
-      Types::Entity[slug: 'web', path: '../repos/taskrabbit/v3', type: :root]
+      build(:entity, slug: 'web', path: '../repos/taskrabbit/v3', type: :root)
     end
 
     before do

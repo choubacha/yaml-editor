@@ -28,6 +28,10 @@ RSpec.describe Types do
       expect(Types::Key['some-key']).to eq 'some-key'
     end
 
+    it 'allows slashes in each segment' do
+      expect(Types::Key['some/key']).to eq 'some/key'
+    end
+
     it 'allows underscores' do
       expect(Types::Key['some_key']).to eq 'some_key'
     end
@@ -45,6 +49,9 @@ RSpec.describe Types do
   end
 
   describe Types::Value do
-    xit 'allows all valid YAML values'
+    it 'allows all valid YAML values' do
+      string = Faker::String.random
+      expect(Types::Value[string]).to eq string
+    end
   end
 end

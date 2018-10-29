@@ -6,7 +6,7 @@ require 'types'
 RSpec.describe Db::Entities do
   let(:entities) { Db::Entities.new }
   let(:entity) do
-    Types::Entity[slug: 'web', path: '../repos/taskrabbit/v3', type: :root]
+    build(:entity, slug: 'web', path: '../repos/taskrabbit/v3', type: :root)
   end
 
   it 'can add entities' do

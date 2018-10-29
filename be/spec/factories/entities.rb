@@ -9,6 +9,7 @@ FactoryBot.define do
     slug { Faker::App.name.gsub(/\s+/, '-').underscore }
     path { Faker::File.file_name }
     type { Types::EntityType.values.sample }
+    display { Faker::App.name }
 
     initialize_with { new(attributes) }
   end
