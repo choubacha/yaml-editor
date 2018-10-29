@@ -12,12 +12,24 @@ RSpec.describe Db::Ops::StringKeyMatch do
   let(:matcher) { Db::Ops::StringKeyMatch.new(strings, term) }
   let(:results) { matcher.match }
 
-  context 'when term is a value' do
+  context 'when term is fully inside each' do
     let(:term) { 'apple' }
 
     it 'matches on each char' do
       expect(results.size).to eq 3
       expect(results.first).to be_a Types::Str
+    end
+
+    it 'ranks them based on how left-most the match is' do
+      expect(results).to eq([str_a, str_b, str_c])
+    end
+  end
+
+  context 'when the term is spread out' do
+    let(:term) { 'appna' }
+
+    it 'ranks them based on the least spread out' do
+      expect(results).to eq([str_a, str_c])
     end
   end
 end
